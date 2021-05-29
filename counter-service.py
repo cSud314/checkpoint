@@ -6,7 +6,7 @@ counter = 0
 if os.path.isfile('counter.txt'):
    print("file already exists")
    f = open("counter.txt", "r")
-   for i in content:
+   for i in f:
        if i.idigit() == True:
            counter = int(i)
 else:
