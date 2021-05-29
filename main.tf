@@ -15,7 +15,7 @@ resource "kubernetes_service" "checkpoint" {
   }
 }
 
-resource "kubernetes_pod" "checkpoint" {
+resource "kubernetes_deployment" "checkpoint" {
   metadata {
     name = "terraform-checkpoint"
     labels = {
@@ -24,9 +24,17 @@ resource "kubernetes_pod" "checkpoint" {
   }
 
   spec {
-    container { 
-      image = "guylurieg/checkpoint"
-      name = "checkpointContainer"
+    replicas = 3
+    template {
+      labels = {
+        app = "MyApp"
+      }
+    }
+    spec {
+      container { 
+       image = "guylurieg/checkpoint"
+       name = "checkpointContainer"
+      }
      }
    }
 }
