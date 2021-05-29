@@ -1,0 +1,19 @@
+build-image:
+  stage: build 
+  script: 
+    - docker build -t guylurieg/checkpoint .
+    - docker run -d -p 80:80 guylurieg/checkpoint 
+tests: 
+  stage: test
+  script: 
+    - curl -x POST localhost:80 
+    - curl localhost:80
+docking:
+  stage: Prepare Docker 
+  script: 
+    - docker stop checkpoint 
+    - docker rm checkpoint
+    - docker image push guylurieg/checkpoint:latest
+deploy:
+  stage: terraform
+  script:
